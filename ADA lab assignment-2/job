@@ -1,0 +1,23 @@
+def job_sequencing(jobs):
+    jobs.sort(key=lambda x: x[2], reverse=True)
+    
+    max_deadline = max(j[1] for j in jobs)
+    slots = [-1] * max_deadline
+    profit = 0
+    
+    for job in jobs:
+        for j in range(job[1]-1, -1, -1):
+            if slots[j] == -1:
+                slots[j] = job[0]
+                profit += job[2]
+                break
+    
+    return slots, profit
+
+jobs = [
+    ('j1',1,3), ('j2',3,5), ('j3',4,20),
+    ('j4',3,18), ('j5',2,1), ('j6',1,6), ('j7',2,30)
+]
+
+print(job_sequencing(jobs))
+
